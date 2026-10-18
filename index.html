@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10131b">
+  <title>Video Hub</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root { color-scheme: dark; --bg:#10131b; --panel:#191e2a; --muted:#a8b0c2; --accent:#54a9eb; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:#f7f8fc; font:16px/1.45 system-ui,-apple-system,sans-serif; }
+    header { padding:22px 18px 14px; position:sticky; top:0; background:rgba(16,19,27,.96); z-index:2; }
+    .brand { color:var(--accent); font-weight:800; letter-spacing:.08em; font-size:12px; }
+    h1 { margin:4px 0 12px; font-size:25px; }
+    input { width:100%; padding:12px 14px; border:1px solid #30384a; border-radius:12px; color:white; background:var(--panel); font:inherit; outline:none; }
+    main { padding:4px 14px 32px; max-width:850px; margin:auto; }
+    .status { padding:10px 4px 14px; color:var(--muted); font-size:13px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:12px; }
+    .card { background:var(--panel); border:1px solid #272e3e; border-radius:15px; overflow:hidden; min-width:0; }
+    .thumb { aspect-ratio:16/10; display:grid; place-items:center; background:linear-gradient(140deg,#202d45,#111723); font-size:36px; }
+    .content { padding:11px; }
+    .title { font-weight:650; font-size:14px; line-height:1.35; overflow-wrap:anywhere; min-height:38px; }
+    .meta { color:var(--muted); font-size:12px; margin:7px 0 10px; }
+    .actions { display:flex; gap:7px; }
+    a.btn { text-align:center; flex:1; padding:9px 5px; text-decoration:none; border-radius:9px; font-weight:700; font-size:12px; color:white; background:#2b3548; }
+    a.primary { background:var(--accent); color:#071421; }
+    .empty { text-align:center; color:var(--muted); padding:45px 18px; grid-column:1/-1; }
+    footer { text-align:center; color:var(--muted); font-size:12px; padding:22px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">VIDEO HUB · TELEGRAM</div>
+    <h1>Nonton video 🎬</h1>
+    <input id="search" type="search" placeholder="Cari video..." aria-label="Cari video">
+  </header>
+  <main>
+    <div id="status" class="status">Memuat daftar video…</div>
+    <section id="grid" class="grid"></section>
+    <footer>Video dibuka melalui postingan channel Telegram sumber.</footer>
+  </main>
+  <script>
+    const tg = window.Telegram?.WebApp;
+    tg?.ready();
+    tg?.expand();
+    const grid = document.getElementById('grid');
+    const status = document.getElementById('status');
+    const search = document.getElementById('search');
+    let allVideos = [];
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, c => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      }[c]));
+    }
+    function humanSize(bytes) {
+      if (!bytes) return '';
+      const units = ['B','KB','MB','GB'];
+      let n = bytes, i = 0;
+      while (n >= 1024 && i < units.length - 1) { n /= 1024; i++; }
+      return `${n.toFixed(i ? 1 : 0)} ${units[i]}`;
+    }
+    function render() {
+      const q = search.value.trim().toLowerCase();
+      const items = allVideos.filter(v => v.title.toLowerCase().includes(q));
+      status.textContent = `${items.length} video${items.length === 1 ? '' : ''}`;
+      if (!items.length) {
+        grid.innerHTML = `<div class="empty">${allVideos.length ? 'Video tidak ditemukan.' : 'Belum ada video tercatat. Setelah bot menjadi admin dan webhook aktif, posting video baru di channel untuk menambah katalog.'}</div>`;
+        return;
+      }
+      grid.innerHTML = items.map(v => `
+        <article class="card">
+          <div class="thumb" aria-hidden="true">▶</div>
+          <div class="content">
+            <div class="title">${esc(v.title)}</div>
+            <div class="meta">${esc(humanSize(v.fileSize) || 'Video Telegram')}${v.duration ? ' · ' + Math.floor(v.duration/60) + ':' + String(v.duration%60).padStart(2,'0') : ''}</div>
+            <div class="actions">
+              <a class="btn primary" href="${esc(v.postUrl)}" target="_blank" rel="noopener">▶ Nonton</a>
+              <a class="btn" href="${esc(v.postUrl)}" target="_blank" rel="noopener">↓ Download</a>
+            </div>
+          </div>
+        </article>`).join('');
+    }
+    async function load() {
+      try {
+        const response = await fetch('/api/videos', { cache:'no-store' });
+        if (!response.ok) throw new Error('Server mengembalikan status ' + response.status);
+        allVideos = await response.json();
+        render();
+      } catch (err) {
+        status.textContent = 'Gagal memuat video. Periksa koneksi atau server.';
+        grid.innerHTML = `<div class="empty">${esc(err.message)}</div>`;
+      }
+    }
+    search.addEventListener('input', render);
+    load();
+  </script>
+</body>
+</html>
