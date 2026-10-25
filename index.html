@@ -1,508 +1,565 @@
+
 <!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111">
+<meta name="description" content="Temukan film pilihan dan film terbaru di NontonKu.">
+<title>NontonKu — Dunia Film Pilihanmu</title>
 
-<html lang="id">    
-<head>    
-  <script>(function(s){s.dataset.zone='12059155',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>    
-  <meta charset="utf-8">    
-  <meta name="viewport" content="width=device-width,initial-scale=1">    
-  <meta name="theme-color" content="#050b16">    
-  <meta name="description" content="Temukan film pilihan dan film terbaru di NontonKu.">    
-  <title>NontonKu — Dunia Film Pilihanmu</title>    
-  <link rel="preconnect" href="https://fonts.googleapis.com">    
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">    
-  <link rel="stylesheet" href="/style.css">    
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>    
-  <script src="https://pl31787884.profitableratecpmnetwork.com/55/d9/52/55d95203e281a108df48029df99e85e6.js"></script>    
-</head>  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMFN2JN7DQ"></script>  <script>    
-  window.dataLayer = window.dataLayer || [];    
-  function gtag(){dataLayer.push(arguments);}    
-  gtag('js', new Date());    
-  gtag('config', 'G-HMFN2JN7DQ');    
-</script>  <body>    
-<header class="nav">    
-  <a class="brand" href="index.html" aria-label="NontonKu beranda">NONTON<span>KU</span><i></i></a>    
-  <nav class="nav-links">    
-    <a href="#beranda">Beranda</a>    
-    <a href="#terbaru">Film Terbaru</a>    
-    <a href="#koleksi">Koleksi</a>    
-  </nav>    
-  <div class="nav-actions">    
-    <label class="nav-search">    
-      <span aria-hidden="true">⌕</span>    
-      <input id="searchTop" placeholder="Cari film..." aria-label="Cari film" oninput="syncSearch(this.value)">    
-    </label>    
-    <a href="admin.html" class="admin-link">Admin ↗</a>    
-  </div>    
-</header>  <main>    
-  <section id="beranda" class="hero">    
-    <div class="hero-glow"></div>    
-    <div class="hero-copy">    
-      <p class="eyebrow"><span class="eyebrow-dot"></span> BIOSKOP DIGITAL ANDA</p>    
-      <h1>Cerita hebat.<br><span>Pengalaman sinematik.</span></h1>    
-      <p class="hero-description">Temukan film pilihan, jelajahi genre favorit, dan nikmati tontonan langsung dari satu tempat.</p>    
-      <div class="hero-actions">    
-        <button class="primary-btn" onclick="document.getElementById('terbaru').scrollIntoView({behavior:'smooth'})"><span>▶</span> Jelajahi Film</button>    
-        <a class="text-link" href="#koleksi">Lihat semua koleksi <span>→</span></a>    
-      </div>    
-      <div class="hero-meta">    
-        <span><b class="live-dot"></b> PILIHAN UNTUKMU</span>    
-        <span class="meta-divider"></span>    
-        <span>UPDATE FILM TERBARU</span>    
-      </div>    
-    </div>    
-    <div class="hero-art" aria-hidden="true">    
-      <div class="orbit orbit-one"></div>    
-      <div class="orbit orbit-two"></div>    
-      <div class="art-screen">    
-        <div class="screen-sheen"></div>    
-        <div class="screen-mark">NK<span>+</span></div>    
-        <div class="screen-caption">YOUR NEXT<br><strong>FAVORITE FILM</strong></div>    
-      </div>    
-      <div class="floating-chip chip-top">✦ &nbsp; CINEMATIC</div>    
-    </div>    
-  </section>    <section class="stats-strip" aria-label="Fitur NontonKu">    
-    <div><span class="stat-icon">◈</span><span><b>Koleksi pilihan</b><small>Untuk waktu santaimu</small></span></div>    
-    <div><span class="stat-icon">▣</span><span><b>Berbagai genre</b><small>Temukan favoritmu</small></span></div>    
-    <div><span class="stat-icon">▷</span><span><b>Tonton langsung</b><small>Praktis dari perangkatmu</small></span></div>    
-  </section>    <section class="ad-placement ad-home" aria-label="Iklan banner 320x50">    
-    <div class="ad-placement-label">IKLAN</div>    
-    <div class="ad-320x50-slot">    
-      <script>    
-        atOptions = {'key':'4d14e0ed047da413a96ed9b0f0a45c55','format':'iframe','height':50,'width':320,'params':{}};    
-      </script>    
-      <script async src="https://www.highrevenueformat.com/4d14e0ed047da413a96ed9b0f0a45c55/invoke.js"></script>    
-    </div>    
-  </section>    <section id="terbaru" class="section latest-section">    
-    <div class="section-head">    
-      <div>    
-        <p class="section-kicker">JANGAN LEWATKAN</p>    
-        <h2>Film <span>Terbaru</span></h2>    
-        <p class="section-subtitle">Yang baru ditambahkan ke koleksi NontonKu.</p>    
-      </div>    
-      <a class="view-all" href="#koleksi">Semua film <span>→</span></a>    
-    </div>    
-    <div id="latestGrid" class="latest-grid"><p class="muted">Memuat film terbaru...</p></div>    
-  </section>    <section id="koleksi" class="section collection-section">    
-    <div class="section-head collection-head">    
-      <div>    
-        <p class="section-kicker">PILIH PETUALANGANMU</p>    
-        <h2>Jelajahi <span>Koleksi</span></h2>    
-        <p class="section-subtitle">Cari berdasarkan judul atau pilih genre favoritmu.</p>    
-      </div>    
-      <label class="collection-search">    
-        <span>⌕</span>    
-        <input id="search" placeholder="Cari judul atau genre..." oninput="render()" aria-label="Cari judul atau genre">    
-      </label>    
-    </div>    
-    <div id="genres" class="genre-list"><button class="genre-chip active" data-genre="all" onclick="setGenre('all')">Semua</button></div>    
-    <div id="grid" class="grid"><p class="muted">Memuat film...</p></div>    
-    <p id="resultCount" class="result-count"></p>    
-  </section>    
-</main>  <footer>    
-  <a class="footer-brand" href="index.html">NONTON<span>KU</span></a>    
-  <p>Tempat cerita dan sinema bertemu.</p>    
-  <div class="footer-links">    
-    <a href="about.html">Tentang Kami</a>    
-    <a href="contact.html">Kontak</a>    
-    <a href="privacy.html">Kebijakan Privasi</a>    
-    <a href="terms.html">Syarat & Ketentuan</a>    
-    <a href="dmca.html">DMCA / Hak Cipta</a>    
-    <a href="disclaimer.html">Disclaimer</a>    
-  </div>    
-  <small>© <span id="yearNow"></span> NontonKu. Semua hak dilindungi.</small>    
-</footer>  <div id="detail" class="modal detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle" onclick="if(event.target===this)closeDetail()">    
-  <div class="detail-box">    
-    <button class="close detail-close" onclick="closeDetail()" aria-label="Tutup detail">×</button>    
-    <div class="ad-detail"><span class="ad-placement-label">IKLAN</span><span>Area iklan pada halaman detail film</span></div>    
-    <div id="detailContent"></div>    
-  </div>    
-</div>  <div id="player" class="modal player-modal" role="dialog" aria-modal="true" aria-labelledby="playerTitle" onclick="if(event.target===this)closePlayer()">    
-  <div class="modal-box">    
-    <button class="close" onclick="closePlayer()" aria-label="Tutup pemutar">×</button>    
-    <div class="ad-player" aria-label="Iklan di atas pemutar film">    
-      <div class="ad-placement-label">IKLAN</div>    
-      <div id="adsterra-player-slot" class="adsterra-player-slot">    
-        <div id="container-ad51b057c7485f3c6a1992e15c154301"></div>    
-      </div>    
-    </div>  <video id="video" controls playsinline></video>    <iframe    
-  id="cloudflarePlayer"    
-  style="display:none;width:100%;aspect-ratio:16/9;border:0;background:#000"    
-  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"    
-  allowfullscreen    
-  title="Pemutar film Cloudflare">    
-</iframe>    <div class="watch-action-buttons">    
-  <a    
-    class="watch-action-button download-button"    
-    href="https://s.shopee.co.id/4qGYUSXXnp"    
-    target="_blank"    
-    rel="noopener noreferrer sponsored">    
-    <span aria-hidden="true">⬇</span>    
-    DOWNLOAD    
-  </a>    <a    
-class="watch-action-button share-button"    
-href="https://www.profitableratecpmnetwork.com/btd2ds1ikt?key=9ae19f534b0fe697978a6a451cb237d0"    
-target="_blank"    
-rel="noopener noreferrer sponsored">
-<span aria-hidden="true">↗</span>
-BAGIKAN
-</a>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HMFN2JN7DQ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-HMFN2JN7DQ');
+</script>
 
-</div>    <style>    
-  .watch-action-buttons {    
-    display: grid;    
-    grid-template-columns: repeat(2, minmax(0, 1fr));    
-    gap: 12px;    
-    margin: 16px 0;    
-    width: 100%;    
-  }    
-  
-  .watch-action-button {    
-    display: flex;    
-    align-items: center;    
-    justify-content: center;    
-    gap: 8px;    
-    box-sizing: border-box;    
-    min-height: 48px;    
-    padding: 13px 8px;    
-    border-radius: 10px;    
-    color: #ffffff !important;    
-    text-decoration: none !important;    
-    text-align: center;    
-    font-size: 14px;    
-    font-weight: 800;    
-    letter-spacing: .3px;    
-    transition: transform .2s ease, opacity .2s ease;    
-  }    
-  
-  .watch-action-button:hover {    
-    transform: translateY(-2px);    
-    opacity: .92;    
-  }    
-  
-  .download-button {    
-    background: #ee4d2d;    
-  }    
-  
-  .share-button {    
-    background: #2878d0;    
-  }    
-  
-  @media (max-width: 360px) {    
-    .watch-action-buttons {    
-      gap: 8px;    
-    }    
-  
-    .watch-action-button {    
-      font-size: 12px;    
-      padding: 12px 5px;    
-    }    
-  }    
-</style>    <h2 id="playerTitle"></h2>    
-<p class="player-note">Film diputar langsung di NontonKu. Gunakan tombol layar penuh hanya jika diperlukan.</p>    </div>    
-</div>  <script>    
-'use strict';    let films = [];
-let activeGenre = 'all';
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-const fallbackPoster = 'https://placehold.co/600x900/0b1628/9fbce9?text=NontonKu';
-
-const SUPABASE_URL = 'https://vsuwjokcqiruhbmmtabb.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_9rZvzp0sYjKsAFDsNCb75g_7DXYvuQ5';
-
-async function load() {
-try {
-const db = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY
-);
-
-const { data, error } = await db    
-  .from('films')    
-  .select('*')    
-  .eq('published', true)    
-  .order('created_at', { ascending: false });    
-
-if (error) {    
-  console.error('Supabase load error:', error);    
-  showLoadError('Film belum bisa dimuat. Periksa pengaturan akses Supabase.');    
-  return;    
-}    
-
-films = (data || []).map(f => ({    
-  ...f,    
-  year: f.release_year,    
-  poster_url: f.poster_path,    
-  video_url: f.video_path    
-}));    
-
-render();    
-renderLatest();    
-renderGenres();    
-openLinkedFilm();
-
-} catch (error) {
-console.error('Website load error:', error);
-showLoadError('Terjadi masalah saat memuat film. Coba muat ulang halaman.');
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#111;color:#fff;
+ font-family:Arial,system-ui,sans-serif
 }
+header{
+ position:sticky;top:0;background:#151515;
+ padding:14px 4%;display:flex;gap:12px;
+ align-items:center;z-index:3
+}
+.logo{
+ font-weight:900;color:#ed2335;font-size:22px;
+ text-decoration:none;white-space:nowrap
+}
+input{
+ margin-left:auto;width:min(55%,320px);
+ padding:11px;border:1px solid #555;
+ border-radius:8px;background:#242424;color:white
 }
 
-function showLoadError(msg) {
-['grid', 'latestGrid'].forEach(id => {
-document.getElementById(id).innerHTML =
-<div class="empty-state"><span>◌</span><p>${esc(msg)}</p></div>;
-});
+/* BANNER FILM TERBARU */
+.hero{
+ position:relative;
+ padding:28px 5%;
+ background:linear-gradient(110deg,#261018,#151515 65%,#222);
+ min-height:270px;
+ display:flex;
+ align-items:center;
+ gap:24px;
+ overflow:hidden
+}
+.hero-poster{
+ width:145px;
+ flex-shrink:0;
+ aspect-ratio:2/3;
+ object-fit:cover;
+ border-radius:10px;
+ background:#292929;
+ box-shadow:0 8px 25px #0008
+}
+.hero-content{min-width:0;max-width:650px}
+.hero-label{
+ display:inline-block;
+ color:#ff5867;
+ font-size:12px;
+ font-weight:800;
+ letter-spacing:1.5px;
+ margin-bottom:10px
+}
+.hero h1{
+ font-size:clamp(25px,5vw,44px);
+ line-height:1.15;
+ margin:0 0 10px;
+ overflow-wrap:anywhere
+}
+.hero p{color:#ccc;line-height:1.6;margin:0 0 14px}
+.hero-meta{font-size:13px;color:#bbb;margin-bottom:16px}
+.watch-button{
+ display:inline-block;
+ border:0;border-radius:7px;
+ padding:12px 20px;
+ background:#ed2335;color:white;
+ font-weight:800;font-size:14px;
+ cursor:pointer;text-decoration:none
+}
+.watch-button:disabled{opacity:.5;cursor:not-allowed}
+
+.section{margin:24px 0}
+.section h2{margin:0 4% 12px;font-size:20px}
+.row{
+ display:flex;gap:12px;overflow-x:auto;
+ padding:0 4% 14px
+}
+.card{flex:0 0 145px;cursor:pointer}
+.poster{
+ display:block;width:100%;aspect-ratio:2/3;
+ object-fit:cover;border-radius:7px;
+ background:linear-gradient(145deg,#392038,#23334c)
+}
+.title{font-weight:700;font-size:14px;margin-top:7px}
+.meta{font-size:12px;color:#aaa;margin-top:4px}
+.notice{
+ margin:20px 4%;padding:14px;
+ background:#252525;border-radius:8px;line-height:1.5
+}
+.ad-area{text-align:center;min-height:50px;margin:12px auto;overflow:hidden}
+.ad-label{font-size:10px;letter-spacing:2px;color:#888;margin:8px}
+
+.modal{
+ display:none;position:fixed;inset:0;
+ background:#000e;z-index:9;overflow:auto;
+ padding:16px;align-items:center;justify-content:center
+}
+.modal.open{display:flex}
+.box{
+ width:min(900px,100%);background:#1b1b1b;
+ border-radius:10px;overflow:hidden
+}
+.bar{
+ display:flex;justify-content:space-between;
+ align-items:center;padding:12px;gap:10px
+}
+.bar h2{font-size:18px}
+.bar button{
+ border:0;border-radius:7px;padding:10px 14px;cursor:pointer
+}
+.player{
+ aspect-ratio:16/9;background:#000;
+ display:flex;align-items:center;justify-content:center;
+ color:#fff
+}
+.player iframe,.player video{
+ width:100%;height:100%;border:0
+}
+.details{padding:14px}
+.details a{color:white}
+.actions{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:10px;margin-top:14px
+}
+.action{
+ display:flex;align-items:center;justify-content:center;
+ gap:8px;min-height:46px;padding:12px 8px;
+ border-radius:9px;color:#fff!important;
+ text-decoration:none;font-size:13px;font-weight:800;text-align:center
+}
+.download{background:#ee4d2d}
+.share{background:#2878d0}
+.direct{display:inline-block;margin-top:12px}
+
+@media(max-width:520px){
+ .hero{padding:24px 5%;gap:15px;min-height:220px}
+ .hero-poster{width:112px}
+ .hero h1{font-size:25px}
+ .hero p{font-size:13px}
+ .watch-button{padding:10px 14px;font-size:12px}
+ .card{flex-basis:125px}
+ .logo{font-size:18px}
+ header{gap:8px}
+ .actions{gap:8px}
+ .action{font-size:12px}
+}
+@media(max-width:350px){
+ .hero{gap:10px}
+ .hero-poster{width:90px}
+ .hero h1{font-size:21px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <a class="logo" href="/">NONTONKU</a>
+ <input id="search" type="search" placeholder="Cari film..." aria-label="Cari film">
+</header>
+
+<!-- BANNER OTOMATIS DARI FILM TERBARU SUPABASE -->
+<section class="hero">
+ <img
+  id="heroPoster"
+  class="hero-poster"
+  src="https://placehold.co/600x900/0b1628/9fbce9?text=NontonKu"
+  alt="Poster film terbaru"
+ >
+ <div class="hero-content">
+  <div class="hero-label">FILM TERBARU</div>
+  <h1 id="heroTitle">NontonKu</h1>
+  <p id="heroText">Menghubungkan ke Supabase...</p>
+  <div class="hero-meta" id="heroMeta">Memuat informasi film...</div>
+  <button class="watch-button" id="heroWatch" disabled>
+   Memuat film...
+  </button>
+ </div>
+</section>
+
+<div id="ad-area" class="ad-area">
+ <div class="ad-label">IKLAN</div>
+
+ <script>
+ (function(s){
+  s.dataset.zone='12059155';
+  s.src='https://n6wxm.com/vignette.min.js';
+ })(document.documentElement.appendChild(document.createElement('script')));
+ </script>
+
+ <div style="min-height:50px">
+  <script>
+  var atOptions={
+   'key':'4d14e0ed047da413a96ed9b0f0a45c55',
+   'format':'iframe','height':50,'width':320,'params':{}
+  };
+  </script>
+  <script async src="https://www.highrevenueformat.com/4d14e0ed047da413a96ed9b0f0a45c55/invoke.js"></script>
+ </div>
+</div>
+
+<main id="list">
+ <div class="notice" id="status">Menghubungkan ke Supabase...</div>
+</main>
+
+<!-- PEMUTAR VIDEO -->
+<div class="modal" id="modal">
+ <div class="box">
+  <div class="bar">
+   <h2 id="filmTitle">Putar film</h2>
+   <button id="close">Tutup ✕</button>
+  </div>
+
+  <div class="ad-area">
+   <div class="ad-label">IKLAN</div>
+   <div id="container-ad51b057c7485f3c6a1992e15c154301"></div>
+  </div>
+
+  <div class="player" id="player"></div>
+
+  <div class="details">
+   <p id="filmMeta" class="muted"></p>
+   <a id="direct" class="direct" target="_blank"
+      rel="noopener noreferrer" hidden>Buka video di tab baru</a>
+
+   <div class="actions">
+    <a class="action download"
+       href="https://s.shopee.co.id/4qGYUSXXnp"
+       target="_blank"
+       rel="noopener noreferrer sponsored">⬇ DOWNLOAD</a>
+
+    <a class="action share" id="shareLink"
+       href="https://www.profitableratecpmnetwork.com/btd2ds1ikt?key=9ae19f534b0fe697978a6a451cb237d0"
+       target="_blank"
+       rel="noopener noreferrer sponsored">↗ BAGIKAN</a>
+   </div>
+  </div>
+ </div>
+</div>
+
+<script async src="https://pl31787885.profitableratecpmnetwork.com/55/d9/52/55d95203e281a108df48029df99e85e6.js"></script>
+
+<script>
+(function(){
+'use strict';
+
+const $ = id => document.getElementById(id);
+let films = [];
+
+const SUPABASE_URL =
+ 'https://vsuwjokcqiruhbmmtabb.supabase.co';
+
+/*
+ * Gunakan publishable key proyek Supabase lama.
+ * Kunci di bawah adalah kunci yang tercantum pada
+ * index.html GitHub yang diperiksa.
+ */
+const SUPABASE_PUBLISHABLE_KEY =
+ 'sb_publishable_9rZvzp0sYjKsAFDsNCb75g_7DXYvuQ5';
+
+const fallbackPoster =
+ 'https://placehold.co/600x900/0b1628/9fbce9?text=NontonKu';
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({
+ '&':'&amp;',
+ '<':'&lt;',
+ '>':'&gt;',
+ '"':'&quot;',
+ "'":'&#39;'
+}[c]));
+
+function safeUrl(s){
+ try{
+  const u = new URL(String(s || ''), location.href);
+  return ['http:','https:'].includes(u.protocol) ? u.href : '';
+ }catch{
+  return '';
+ }
 }
 
-function syncSearch(value) {
-document.getElementById('search').value = value;
-render();
-document.getElementById('koleksi').scrollIntoView({
-behavior: 'smooth',
-block: 'start'
-});
+function normalizeFilm(f){
+ return {
+  ...f,
+  year:f.release_year ?? f.year ?? '',
+  poster_url:f.poster_path ?? f.poster_url ?? '',
+  video_url:f.video_path ?? f.video_url ?? '',
+  genre:f.genre ?? 'Film lainnya'
+ };
 }
 
-function setGenre(genre) {
-try {
-genre = decodeURIComponent(genre);
-} catch (e) {}
+/* Mengatur banner berdasarkan film terbaru */
+function renderHero(){
+ const f = films[0];
 
-activeGenre = genre.toLowerCase();
+ if(!f){
+  $('heroTitle').textContent = 'Belum ada film terbaru';
+  $('heroText').textContent =
+   'Film yang dipublikasikan akan tampil di bagian ini.';
+  $('heroMeta').textContent = '';
+  $('heroPoster').src = fallbackPoster;
+  $('heroWatch').textContent = 'Film belum tersedia';
+  $('heroWatch').disabled = true;
+  return;
+ }
 
-document.querySelectorAll('.genre-chip').forEach(b => {
-b.classList.toggle('active', b.dataset.genre === activeGenre);
-});
+ $('heroTitle').textContent = f.title || 'Film terbaru';
+ $('heroText').textContent =
+  f.description || 'Tonton film terbaru pilihanmu di NontonKu.';
 
-render();
+ $('heroMeta').textContent =
+  [f.year, f.genre].filter(Boolean).join(' • ');
+
+ const poster = safeUrl(f.poster_url);
+ $('heroPoster').src = poster || fallbackPoster;
+ $('heroPoster').onerror = () => {
+  $('heroPoster').onerror = null;
+  $('heroPoster').src = fallbackPoster;
+ };
+
+ $('heroWatch').textContent = '▶ Tonton Sekarang';
+ $('heroWatch').disabled = false;
+ $('heroWatch').onclick = () => play(f.id);
 }
 
-function poster(f) {
-return esc(f.poster_url || fallbackPoster);
+/* Daftar koleksi film */
+function render(){
+ const q = $('search').value.trim().toLowerCase();
+
+ const filtered = films.filter(f =>
+  [f.title, f.genre, f.year]
+   .join(' ')
+   .toLowerCase()
+   .includes(q)
+ );
+
+ const groups = {};
+
+ filtered.forEach(f => {
+  (groups[f.genre || 'Film lainnya'] ??= []).push(f);
+ });
+
+ const root = $('list');
+ root.innerHTML = '';
+
+ if(!filtered.length){
+  root.innerHTML =
+   '<div class="notice">' +
+   (films.length
+    ? 'Film tidak ditemukan.'
+    : 'Belum ada film yang bisa ditampilkan. Periksa tabel films dan izin baca Supabase.') +
+   '</div>';
+  return;
+ }
+
+ Object.entries(groups).forEach(([genre, arr]) => {
+  const section = document.createElement('section');
+  section.className = 'section';
+
+  section.innerHTML =
+   '<h2>' + esc(genre) + '</h2>' +
+   '<div class="row">' +
+   arr.map(f => {
+    const poster = safeUrl(f.poster_url);
+    return `
+     <article class="card" tabindex="0" role="button"
+      data-id="${esc(f.id)}">
+      <img class="poster" loading="lazy"
+       src="${esc(poster || fallbackPoster)}"
+       alt="${esc(f.title)}"
+       onerror="this.onerror=null;this.src='${fallbackPoster}'">
+      <div class="title">${esc(f.title)}</div>
+      <div class="meta">${esc(
+       [f.year, f.genre].filter(Boolean).join(' • ')
+      )}</div>
+     </article>
+    `;
+   }).join('') +
+   '</div>';
+
+  root.appendChild(section);
+
+  section.querySelectorAll('.card').forEach(el => {
+   el.onclick = () => play(el.dataset.id);
+
+   el.onkeydown = e => {
+    if(e.key === 'Enter' || e.key === ' '){
+     e.preventDefault();
+     play(el.dataset.id);
+    }
+   };
+  });
+ });
 }
 
-function filmCard(f, index = 0, featured = false) {
-return <article class="${featured ? 'latest-card' : 'movie-card'}" tabindex="0" role="button" aria-label="Lihat detail ${esc(f.title)}" onclick="openDetail('${encodeURIComponent(f.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDetail('${encodeURIComponent(f.id)}')}"><div class="poster-wrap"><img loading="lazy" src="${poster(f)}" alt="Poster ${esc(f.title)}" onerror="this.onerror=null;this.src='${fallbackPoster}'"><span class="poster-shade"></span><span class="poster-play">▶</span>${featured ? '<span class="new-label">BARU DITAMBAHKAN</span>' : ''}</div><div class="movie-info"><h3>${esc(f.title || 'Tanpa judul')}</h3><p><span>${esc(f.year || 'Tahun tidak diketahui')}</span><i></i><span>${esc(f.genre || 'Film')}</span></p></div></article>;
+let adPlayerLoaded = false;
+
+function loadPlayerAd(){
+ if(adPlayerLoaded) return;
+ adPlayerLoaded = true;
+
+ const s = document.createElement('script');
+ s.async = true;
+ s.dataset.cfasync = 'false';
+ s.src =
+  'https://pl31787885.profitableratecpmnetwork.com/ad51b057c7485f3c6a1992e15c154301/invoke.js';
+
+ $('container-ad51b057c7485f3c6a1992e15c154301').appendChild(s);
 }
 
-function render() {
-const input = document.getElementById('search');
-const q = (input.value || '').trim().toLowerCase();
+/* Memutar film yang dipilih */
+function play(id){
+ const f = films.find(x => String(x.id) === String(id));
+ if(!f) return;
 
-const list = films.filter(f => {
-const titleMatches = (f.title || '').toLowerCase().includes(q);
-const genreMatches = (f.genre || '').toLowerCase().includes(q);
-const selectedGenre =
-activeGenre === 'all' ||
-(f.genre || '').trim().toLowerCase() === activeGenre;
+ const u = safeUrl(f.video_url);
 
-return (titleMatches || genreMatches) && selectedGenre;
+ $('filmTitle').textContent = f.title || 'Film';
+ $('filmMeta').textContent =
+  [f.year, f.genre].filter(Boolean).join(' • ');
 
-});
+ $('player').innerHTML = '';
+ $('direct').hidden = !u;
+ $('direct').href = u || '#';
 
-document.getElementById('grid').innerHTML = list.length
-? list.map(f => filmCard(f)).join('')
-: '<div class="empty-state"><span>⌕</span><p>Film tidak ditemukan. Coba kata kunci atau genre lain.</p></div>';
+ if(!u){
+  $('player').textContent = 'Tautan video belum tersedia.';
+ }else if(
+  /iframe\.videodelivery\.net|youtube\.com\/embed|player\.vimeo\.com/i.test(u)
+ ){
+  const x = document.createElement('iframe');
+  x.src = u;
+  x.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  x.allowFullscreen = true;
+  $('player').appendChild(x);
+ }else if(/\.(mp4|webm|ogg|m3u8)(\?|$)/i.test(u)){
+  const x = document.createElement('video');
+  x.src = u;
+  x.controls = true;
+  x.playsInline = true;
+  $('player').appendChild(x);
+ }else{
+  const x = document.createElement('iframe');
+  x.src = u;
+  x.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+  x.allowFullscreen = true;
+  $('player').appendChild(x);
+ }
 
-document.getElementById('resultCount').textContent =
-Menampilkan ${list.length} dari ${films.length} film;
+ const shareUrl = new URL(location.href);
+ shareUrl.hash = 'film-' + encodeURIComponent(f.id);
+
+ $('shareLink').onclick = async e => {
+  if(navigator.share){
+   e.preventDefault();
+   try{
+    await navigator.share({
+     title:f.title || 'Film NontonKu',
+     text:'Lihat film ' + (f.title || ''),
+     url:shareUrl.href
+    });
+   }catch(err){
+    if(err.name !== 'AbortError') console.error(err);
+   }
+  }
+ };
+
+ loadPlayerAd();
+ $('modal').classList.add('open');
+ document.body.style.overflow = 'hidden';
 }
 
-function renderLatest() {
-const latest = films.slice(0, 5);
-
-document.getElementById('latestGrid').innerHTML = latest.length
-? latest.map((f, i) => filmCard(f, i, true)).join('')
-: '<div class="empty-state"><span>✧</span><p>Film terbaru akan tampil di sini setelah ditambahkan melalui halaman admin.</p></div>';
+function close(){
+ $('modal').classList.remove('open');
+ $('player').innerHTML = '';
+ document.body.style.overflow = '';
 }
 
-function renderGenres() {
-const genres = [...new Set(
-films.map(f => (f.genre || '').trim()).filter(Boolean)
-)].sort((a, b) => a.localeCompare(b, 'id'));
+$('close').onclick = close;
 
-document.getElementById('genres').innerHTML =
-'<button class="genre-chip ' + (activeGenre === 'all' ? 'active' : '') +    
-'" data-genre="all" onclick="setGenre(\'all\')">Semua</button>' +
-genres.map(g =>
-<button class="genre-chip ${activeGenre === g.toLowerCase() ? 'active' : ''}" data-genre="${esc(g.toLowerCase())}" onclick="setGenre('${encodeURIComponent(g.toLowerCase())}')">${esc(g)}</button>
-).join('');
-}
-
-function filmSlug(title) {
-return String(title || 'film')
-.normalize('NFD')
-.replace(/[\u0300-\u036f]/g, '')
-.toLowerCase()
-.replace(/[^a-z0-9]+/g, '-')
-.replace(/^-|-$/g, '') || 'film';
-}
-
-function filmPath(f) {
-return /film/${filmSlug(f.title)}/${encodeURIComponent(String(f.id))};
-}
-
-function openDetail(encodedId, updateUrl = true) {
-const id = decodeURIComponent(encodedId);
-const f = films.find(item => String(item.id) === id);
-if (!f) return;
-
-if (updateUrl && location.pathname !== filmPath(f)) {
-history.pushState({ filmId: id }, '', filmPath(f));
-}
-
-document.getElementById('detailContent').innerHTML =
-<div class="detail-layout"><div class="detail-poster"><img src="${poster(f)}" alt="Poster ${esc(f.title)}" onerror="this.onerror=null;this.src='${fallbackPoster}'"></div><div class="detail-copy"><p class="section-kicker">DETAIL FILM</p><h2 id="detailTitle">${esc(f.title || 'Tanpa judul')}</h2><div class="detail-meta"><span>${esc(f.year || 'Tahun tidak diketahui')}</span><span>${esc(f.genre || 'Genre belum diisi')}</span></div><p class="detail-description">${esc(f.description || 'Siapkan diri untuk menikmati film ini. Buka pemutar untuk mulai menonton.')}</p><div class="detail-actions"><button class="primary-btn" onclick="playFilm('${encodeURIComponent(f.id)}')"><span>▶</span> Putar Film</button><button class="secondary-btn" onclick="shareFilm('${encodeURIComponent(f.id)}')">↗ Bagikan Link</button></div></div></div>;
-
-document.getElementById('detail').classList.add('show');
-document.body.classList.add('modal-open');
-}
-
-function closeDetail(updateUrl = true) {
-document.getElementById('detail').classList.remove('show');
-
-if (updateUrl && location.pathname.startsWith('/film/')) {
-history.pushState({}, '', '/');
-}
-
-if (!document.getElementById('player').classList.contains('show')) {
-document.body.classList.remove('modal-open');
-}
-}
-
-async function shareFilm(encodedId) {
-const id = decodeURIComponent(encodedId);
-const f = films.find(item => String(item.id) === id);
-if (!f) return;
-
-const url = location.origin + filmPath(f);
-
-try {
-if (navigator.share) {
-await navigator.share({
-title: f.title || 'NontonKu',
-text: Lihat film ${f.title || ''} di NontonKu,
-url
-});
-} else if (navigator.clipboard) {
-await navigator.clipboard.writeText(url);
-alert('Link film berhasil disalin: ' + url);
-} else {
-prompt('Salin link film ini:', url);
-}
-} catch (e) {
-if (e.name !== 'AbortError') prompt('Salin link film ini:', url);
-}
-}
-
-function openLinkedFilm() {
-const parts = location.pathname.split('/').filter(Boolean);
-
-if (parts[0] === 'film' && parts.length >= 3) {
-const id = decodeURIComponent(parts[2]);
-const f = films.find(item => String(item.id) === id);
-if (f) openDetail(encodeURIComponent(id), false);
-}
-}
-
-function playFilm(encodedId) {
-const f = films.find(item => String(item.id) === decodeURIComponent(encodedId));
-if (!f || !f.video_url) {
-alert('Video film belum tersedia.');
-return;
-}
-
-closeDetail();
-play(f.video_url, f.title || 'NontonKu');
-}
-
-let adsterraPlayerLoaded = false;
-
-function loadAdsterraPlayerAd() {
-if (adsterraPlayerLoaded) return;
-adsterraPlayerLoaded = true;
-
-const script = document.createElement('script');
-script.async = true;
-script.dataset.cfasync = 'false';
-script.src = 'https://pl31787885.profitableratecpmnetwork.com/ad51b057c7485f3c6a1992e15c154301/invoke.js';
-document.getElementById('adsterra-player-slot').appendChild(script);
-}
-
-function play(url, title) {
-const video = document.getElementById('video');
-const iframe = document.getElementById('cloudflarePlayer');
-
-document.getElementById('playerTitle').textContent = title;
-document.getElementById('player').classList.add('show');
-document.body.classList.add('modal-open');
-loadAdsterraPlayerAd();
-
-if (url.includes('iframe.videodelivery.net/')) {
-video.pause();
-video.removeAttribute('src');
-video.load();
-video.style.display = 'none';
-
-iframe.style.display = 'block';    
-iframe.src = url + '?autoplay=true';
-
-} else {
-iframe.removeAttribute('src');
-iframe.style.display = 'none';
-
-video.style.display = 'block';    
-video.src = url;    
-video.play().catch(() => {});
-
-}
-}
-
-function closePlayer() {
-const video = document.getElementById('video');
-const iframe = document.getElementById('cloudflarePlayer');
-
-video.pause();
-video.removeAttribute('src');
-video.load();
-video.style.display = 'block';
-
-iframe.removeAttribute('src');
-iframe.style.display = 'none';
-
-document.getElementById('player').classList.remove('show');
-
-if (!document.getElementById('detail').classList.contains('show')) {
-document.body.classList.remove('modal-open');
-}
-}
-
-function esc(s) {
-return String(s ?? '').replace(/[&<>"']/g, m => ({
-'&': '&',
-'<': '<',
-'>': '>',
-'"': '"',
-"'": '''
-}[m]));
-}
-
-window.addEventListener('popstate', () => {
-if (location.pathname.startsWith('/film/')) {
-openLinkedFilm();
-} else {
-closeDetail(false);
-}
-});
+$('modal').onclick = e => {
+ if(e.target === $('modal')) close();
+};
 
 document.addEventListener('keydown', e => {
-if (e.key === 'Escape') {
-closeDetail();
-closePlayer();
-}
+ if(e.key === 'Escape') close();
 });
 
-document.getElementById('yearNow').textContent = new Date().getFullYear();
-load();
-</script>  <script src="https://pl31787884.profitableratecpmnetwork.com/55/d9/52/55d95203e281a108df48029df99e85e6.js"></script>  </body>
+$('search').addEventListener('input', render);
 
+/* Menghubungkan dan mengambil film dari Supabase */
+async function init(){
+ if(!window.supabase){
+  $('status').textContent =
+   'Pustaka Supabase gagal dimuat. Periksa koneksi internet atau CDN.';
+  $('heroText').textContent = 'Tidak dapat terhubung ke Supabase.';
+  return;
+ }
+
+ try{
+  const db = window.supabase.createClient(
+   SUPABASE_URL,
+   SUPABASE_PUBLISHABLE_KEY
+  );
+
+  const {data, error} = await db
+   .from('films')
+   .select('*')
+   .eq('published', true)
+   .order('created_at', {ascending:false});
+
+  if(error) throw error;
+
+  films = (data || [])
+   .map(normalizeFilm)
+   .filter(f => f.title);
+
+  renderHero();
+  $('status')?.remove();
+  render();
+
+  if(!films.length){
+   $('status')?.remove();
+   $('list').innerHTML =
+    '<div class="notice">Supabase berhasil diakses, tetapi belum ada film yang memenuhi filter published = true.</div>';
+  }
+
+ }catch(e){
+  console.error('Supabase load error:', e);
+
+  $('heroTitle').textContent = 'Film belum dapat dimuat';
+  $('heroText').textContent =
+   'Periksa koneksi Supabase, izin baca tabel, dan pengaturan database.';
+  $('heroMeta').textContent = '';
+  $('heroWatch').textContent = 'Film belum tersedia';
+  $('heroWatch').disabled = true;
+
+  $('status').textContent =
+   'Gagal memuat film dari Supabase: ' +
+   (e.message || 'Periksa izin SELECT/RLS, nama kolom, dan status published.');
+ }
+}
+
+init();
+})();
+</script>
+
+</body>
 </html>
