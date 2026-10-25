@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NontonYuk</title>
+<style>
+:root{--bg:#141414;--fg:#f2f2f2;--mut:#a3a3a3;--red:#e50914;--card:#222;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--fg:#f2f2f2}}
+:root[data-theme="dark"]{--bg:#141414;--fg:#f2f2f2}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:8px;padding:12px 4%;background:linear-gradient(#000c,#0000)}
+.logo{color:var(--red);font-weight:800;font-size:20px;letter-spacing:1px}
+header input,header select{background:#000a;border:1px solid #555;color:var(--fg);padding:8px 10px;border-radius:6px}
+header input{margin-left:auto;width:min(180px,34%)}
+header select{max-width:34%}
+.hero{min-height:56vh;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:80px 4% 36px;margin-top:-56px;background:linear-gradient(0deg,var(--bg),#0000 60%),linear-gradient(120deg,#5b0a1a,#1b2a5e 70%)}
+.hero h1{margin:0;font-size:clamp(30px,8vw,56px)}
+.hero p{margin:0;max-width:520px;color:#ddd}
+.btns{display:flex;gap:10px}
+button{border:0;border-radius:6px;padding:10px 20px;font-weight:700;font-size:15px;cursor:pointer}
+.play{background:#fff;color:#000}.info{background:#6d6d6eb3;color:#fff}
+h2{font-size:18px;margin:22px 4% 8px}
+.row{display:flex;gap:8px;overflow-x:auto;padding:0 4% 8px;scroll-snap-type:x proximity}
+.card{flex:0 0 130px;aspect-ratio:2/3;border-radius:6px;padding:10px;display:flex;align-items:flex-end;font-weight:700;font-size:14px;cursor:pointer;scroll-snap-align:start;transition:transform .2s}
+.card:hover{transform:scale(1.06)}
+.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;z-index:10;padding:16px}
+.modal.on{display:flex}
+.box{background:var(--card);border-radius:10px;width:min(560px,100%);overflow:hidden}
+.screen{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:48px}
+.txt{padding:16px}.txt h3{margin:0 0 6px}.txt p{margin:0 0 12px;color:var(--mut)}
+.x{background:#444;color:#fff}
+.ad{margin:16px 4%;min-height:70px;border:1px dashed #666;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;color:var(--mut);font-size:13px;background:#ffffff0d;text-align:center;padding:8px}.ad b{font-size:10px;letter-spacing:2px;color:#777}.box .ad{margin:0;border-radius:0;border-width:0 0 1px}
+footer{padding:28px 4%;color:var(--mut);font-size:12px}
+</style>
+</head>
+<body>
+<header><span class="logo">NONTONYUK</span><input id="q" aria-label="Search"><select id="lg" aria-label="Bahasa / Language"><option value="id">Indonesia</option><option value="en">English</option><option value="es">Español</option></select></header>
+<section class="hero">
+<div class="ad" style="margin:0 0 8px"><b data-i="ad"></b><span data-i="ad_top"></span></div>
+<h1 data-i="hero_t"></h1>
+<p data-i="hero_p"></p>
+<div class="btns"><button class="play" onclick="openM(0)" data-i="play"></button><button class="info" onclick="openM(0)" data-i="info"></button></div>
+</section>
+<div class="ad"><b data-i="ad"></b><span data-i="ad_mid"></span></div>
+<main id="rows"></main>
+<div class="ad"><b data-i="ad"></b><span data-i="ad_bot"></span></div>
+<footer data-i="foot"></footer>
+<div class="modal" id="m" onclick="if(event.target===this)closeM()">
+<div class="box"><div class="ad"><b data-i="ad"></b><span data-i="ad_modal"></span></div><div class="screen" id="ms">▶</div>
+<div class="txt"><h3 id="mt"></h3><p data-i="syn"></p><button class="x" onclick="closeM()" data-i="close"></button></div></div></div>
+<script>
+var D={
+id:{search:"Cari judul…",hero_t:"Film tayang hari ini",hero_p:"Nonton film gratis hanya di sini, di NontonYuk",play:"▶ Putar",info:"Info",c0:"Populer",c1:"Aksi & Petualangan",c2:"Drama Keluarga",c3:"Misteri",ad:"IKLAN",ad_top:"Spanduk di atas judul (970×90)",ad_mid:"Spanduk beranda atas (970×90)",ad_bot:"Spanduk beranda bawah (970×90)",ad_modal:"Banner di atas video (728×90)",close:"Tutup",syn:"Sinopsis contoh. Di sini nanti tampil pemutar video dan deskripsi film.",foot:"Halaman demo. Judul dan poster hanya contoh fiktif.",none:"Tidak ada hasil."},
+en:{search:"Search titles…",hero_t:"Movies showing today",hero_p:"Watch free movies only here, on NontonYuk",play:"▶ Play",info:"Info",c0:"Popular",c1:"Action & Adventure",c2:"Family Drama",c3:"Mystery",ad:"AD",ad_top:"Banner above the title (970×90)",ad_mid:"Homepage top banner (970×90)",ad_bot:"Homepage bottom banner (970×90)",ad_modal:"Banner above the video (728×90)",close:"Close",syn:"Sample synopsis. The video player and film description will appear here.",foot:"Demo page. Titles and posters are fictional examples.",none:"No results."},
+es:{search:"Buscar títulos…",hero_t:"Películas en cartelera hoy",hero_p:"Mira películas gratis solo aquí, en NontonYuk",play:"▶ Reproducir",info:"Info",c0:"Populares",c1:"Acción y aventura",c2:"Drama familiar",c3:"Misterio",ad:"ANUNCIO",ad_top:"Banner sobre el título (970×90)",ad_mid:"Banner superior de inicio (970×90)",ad_bot:"Banner inferior de inicio (970×90)",ad_modal:"Banner sobre el video (728×90)",close:"Cerrar",syn:"Sinopsis de ejemplo. Aquí aparecerán el reproductor de video y la descripción de la película.",foot:"Página de demostración. Los títulos y carteles son ejemplos ficticios.",none:"Sin resultados."}
+};
+var G=[["#8e2de2","#4a00e0"],["#f12711","#f5af19"],["#134e5e","#71b280"],["#232526","#414345"],["#c31432","#240b36"],["#0f2027","#2c5364"],["#ff512f","#dd2476"],["#1d976c","#93f9b9"]];
+var T=["Langit Merah","Detektif Hujan","Kota Tanpa Nama","Rumah di Seberang","Pelari Malam","Sang Penjaga","Laut Terakhir","Kode Rahasia","Dua Dunia","Jejak Harimau","Musim Dingin","Pulang","Kopi & Senja","Bintang Jatuh","Sirkus Tua","Gerbang Waktu"];
+var C=[[0,0],[1,5],[2,9],[3,3]];
+var lang="id",cur=0;
+function t(k){return D[lang][k]}
+function mk(i){var g=G[i%G.length];return '<div class="card" style="background:linear-gradient(160deg,'+g[0]+','+g[1]+')" onclick="openM('+i+')">'+T[i%T.length]+'</div>'}
+function render(){var f=document.getElementById("q").value.trim().toLowerCase(),h="";
+C.forEach(function(c){var items=[];for(var k=0;k<8;k++){var i=(c[1]+k)%T.length;if(!f||T[i].toLowerCase().indexOf(f)>-1)items.push(i)}
+if(items.length)h+='<h2>'+t("c"+c[0])+'</h2><div class="row">'+items.map(mk).join("")+'</div>'});
+document.getElementById("rows").innerHTML=h||'<h2>'+t("none")+'</h2>'}
+function apply(){document.documentElement.lang=lang;
+document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=t(e.getAttribute("data-i"))});
+document.getElementById("q").placeholder=t("search");render()}
+function openM(i){var g=G[i%G.length];document.getElementById("ms").style.background="linear-gradient(160deg,"+g[0]+","+g[1]+")";
+document.getElementById("mt").textContent=T[i%T.length];document.getElementById("m").classList.add("on")}
+function closeM(){document.getElementById("m").classList.remove("on")}
+document.getElementById("q").addEventListener("input",render);
+document.getElementById("lg").addEventListener("change",function(e){lang=e.target.value;try{localStorage.setItem("lang",lang)}catch(x){}apply()});
+try{var s=localStorage.getItem("lang");if(s&&D[s]){lang=s;document.getElementById("lg").value=s}}catch(x){}
+apply();
+</script>
+</body>
+</html>
