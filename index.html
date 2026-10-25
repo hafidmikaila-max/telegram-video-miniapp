@@ -1,100 +1,71 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#10131b">
-  <title>Video Hub</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    :root { color-scheme: dark; --bg:#10131b; --panel:#191e2a; --muted:#a8b0c2; --accent:#54a9eb; }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:#f7f8fc; font:16px/1.45 system-ui,-apple-system,sans-serif; }
-    header { padding:22px 18px 14px; position:sticky; top:0; background:rgba(16,19,27,.96); z-index:2; }
-    .brand { color:var(--accent); font-weight:800; letter-spacing:.08em; font-size:12px; }
-    h1 { margin:4px 0 12px; font-size:25px; }
-    input { width:100%; padding:12px 14px; border:1px solid #30384a; border-radius:12px; color:white; background:var(--panel); font:inherit; outline:none; }
-    main { padding:4px 14px 32px; max-width:850px; margin:auto; }
-    .status { padding:10px 4px 14px; color:var(--muted); font-size:13px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(155px,1fr)); gap:12px; }
-    .card { background:var(--panel); border:1px solid #272e3e; border-radius:15px; overflow:hidden; min-width:0; }
-    .thumb { aspect-ratio:16/10; display:grid; place-items:center; background:linear-gradient(140deg,#202d45,#111723); font-size:36px; }
-    .content { padding:11px; }
-    .title { font-weight:650; font-size:14px; line-height:1.35; overflow-wrap:anywhere; min-height:38px; }
-    .meta { color:var(--muted); font-size:12px; margin:7px 0 10px; }
-    .actions { display:flex; gap:7px; }
-    a.btn { text-align:center; flex:1; padding:9px 5px; text-decoration:none; border-radius:9px; font-weight:700; font-size:12px; color:white; background:#2b3548; }
-    a.primary { background:var(--accent); color:#071421; }
-    .empty { text-align:center; color:var(--muted); padding:45px 18px; grid-column:1/-1; }
-    footer { text-align:center; color:var(--muted); font-size:12px; padding:22px; }
-  </style>
-</head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111"><title>NontonYuk</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/config.js"></script>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#111;color:#fff;font-family:Arial,system-ui,sans-serif}
+header{position:sticky;top:0;background:#151515;padding:14px 4%;display:flex;gap:12px;align-items:center;z-index:3}
+.logo{font-weight:900;color:#ed2335;font-size:22px}input{margin-left:auto;width:min(55%,320px);padding:11px;border:1px solid #555;border-radius:8px;background:#242424;color:white}
+.hero{padding:36px 5%;background:linear-gradient(0deg,#111,#222);min-height:180px}.hero h1{font-size:clamp(28px,5vw,48px);margin:0 0 8px}.muted{color:#aaa}
+.section{margin:24px 0}.section h2{margin:0 4% 12px;font-size:20px}.row{display:flex;gap:12px;overflow-x:auto;padding:0 4% 14px}
+.card{flex:0 0 145px;cursor:pointer}.poster{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:7px;background:linear-gradient(145deg,#392038,#23334c)}
+.title{font-weight:700;font-size:14px;margin-top:7px}.meta{font-size:12px;color:#aaa;margin-top:4px}.notice{margin:20px 4%;padding:14px;background:#252525;border-radius:8px;line-height:1.5}
+.modal{display:none;position:fixed;inset:0;background:#000e;z-index:9;overflow:auto;padding:16px;align-items:center;justify-content:center}.modal.open{display:flex}
+.box{width:min(900px,100%);background:#1b1b1b;border-radius:10px;overflow:hidden}.bar{display:flex;justify-content:space-between;align-items:center;padding:12px}.bar h2{font-size:18px}.bar button{border:0;border-radius:7px;padding:10px 14px;cursor:pointer}
+.player{aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center}.player iframe,.player video{width:100%;height:100%;border:0}.details{padding:14px}.details a{color:white}
+@media(max-width:420px){.card{flex-basis:125px}.logo{font-size:18px}}
+</style></head>
 <body>
-  <header>
-    <div class="brand">VIDEO HUB · TELEGRAM</div>
-    <h1>Nonton video 🎬</h1>
-    <input id="search" type="search" placeholder="Cari video..." aria-label="Cari video">
-  </header>
-  <main>
-    <div id="status" class="status">Memuat daftar video…</div>
-    <section id="grid" class="grid"></section>
-    <footer>Video dibuka melalui postingan channel Telegram sumber.</footer>
-  </main>
-  <script>
-    const tg = window.Telegram?.WebApp;
-    tg?.ready();
-    tg?.expand();
-    const grid = document.getElementById('grid');
-    const status = document.getElementById('status');
-    const search = document.getElementById('search');
-    let allVideos = [];
-
-    function esc(value) {
-      return String(value ?? '').replace(/[&<>"']/g, c => ({
-        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
-      }[c]));
-    }
-    function humanSize(bytes) {
-      if (!bytes) return '';
-      const units = ['B','KB','MB','GB'];
-      let n = bytes, i = 0;
-      while (n >= 1024 && i < units.length - 1) { n /= 1024; i++; }
-      return `${n.toFixed(i ? 1 : 0)} ${units[i]}`;
-    }
-    function render() {
-      const q = search.value.trim().toLowerCase();
-      const items = allVideos.filter(v => v.title.toLowerCase().includes(q));
-      status.textContent = `${items.length} video${items.length === 1 ? '' : ''}`;
-      if (!items.length) {
-        grid.innerHTML = `<div class="empty">${allVideos.length ? 'Video tidak ditemukan.' : 'Belum ada video tercatat. Setelah bot menjadi admin dan webhook aktif, posting video baru di channel untuk menambah katalog.'}</div>`;
-        return;
-      }
-      grid.innerHTML = items.map(v => `
-        <article class="card">
-          <div class="thumb" aria-hidden="true">▶</div>
-          <div class="content">
-            <div class="title">${esc(v.title)}</div>
-            <div class="meta">${esc(humanSize(v.fileSize) || 'Video Telegram')}${v.duration ? ' · ' + Math.floor(v.duration/60) + ':' + String(v.duration%60).padStart(2,'0') : ''}</div>
-            <div class="actions">
-              <a class="btn primary" href="${esc(v.postUrl)}" target="_blank" rel="noopener">▶ Nonton</a>
-              <a class="btn" href="${esc(v.postUrl)}" target="_blank" rel="noopener">↓ Download</a>
-            </div>
-          </div>
-        </article>`).join('');
-    }
-    async function load() {
-      try {
-        const response = await fetch('/api/videos', { cache:'no-store' });
-        if (!response.ok) throw new Error('Server mengembalikan status ' + response.status);
-        allVideos = await response.json();
-        render();
-      } catch (err) {
-        status.textContent = 'Gagal memuat video. Periksa koneksi atau server.';
-        grid.innerHTML = `<div class="empty">${esc(err.message)}</div>`;
-      }
-    }
-    search.addEventListener('input', render);
-    load();
-  </script>
-</body>
-</html>
+<header><span class="logo">NONTONYUK</span><input id="search" type="search" placeholder="Cari film..." aria-label="Cari film"></header>
+<section class="hero"><h1 id="heroTitle">NontonYuk</h1><p id="heroText" class="muted">Memuat daftar film...</p></section>
+<div id="ad-area" style="text-align:center;min-height:50px;margin:12px auto;overflow:hidden">
+<script>(function(s){s.dataset.zone='12059155';s.src='https://n6wxm.com/vignette.min.js'})(document.documentElement.appendChild(document.createElement('script')));</script>
+</div>
+<main id="list"><div class="notice" id="status">Menghubungkan ke Supabase...</div></main>
+<div class="modal" id="modal"><div class="box"><div class="bar"><h2 id="filmTitle">Putar film</h2><button id="close">Tutup ✕</button></div><div class="player" id="player"></div><div class="details"><p id="filmMeta" class="muted"></p><a id="direct" target="_blank" rel="noopener" hidden>Buka video di tab baru</a></div></div></div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);let films=[];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function safeUrl(s){try{let u=new URL(s,location.href);return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return ''}}
+function render(){
+ const q=$('search').value.trim().toLowerCase(),fs=films.filter(f=>[f.title,f.genre,f.year].join(' ').toLowerCase().includes(q)),groups={};
+ fs.forEach(f=>(groups[f.genre||'Film lainnya']??=[]).push(f));
+ const root=$('list');root.innerHTML='';
+ if(!fs.length){root.innerHTML='<div class="notice">'+(films.length?'Film tidak ditemukan.':'Belum ada data film di tabel films.')+'</div>';return}
+ Object.entries(groups).forEach(([g,arr])=>{
+  let sec=document.createElement('section');sec.className='section';
+  sec.innerHTML='<h2>'+esc(g)+'</h2><div class="row">'+arr.map(f=>'<article class="card" tabindex="0" data-id="'+esc(f.id)+'">'+(safeUrl(f.poster_url)?'<img class="poster" loading="lazy" src="'+esc(safeUrl(f.poster_url))+'" alt="'+esc(f.title)+'">':'<div class="poster"></div>')+'<div class="title">'+esc(f.title)+'</div><div class="meta">'+esc([f.year,f.genre].filter(Boolean).join(' • '))+'</div></article>').join('')+'</div>';
+  root.appendChild(sec);sec.querySelectorAll('.card').forEach(el=>{el.onclick=()=>play(el.dataset.id);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')play(el.dataset.id)}});
+ });
+}
+function play(id){
+ let f=films.find(x=>String(x.id)===String(id));if(!f)return;let u=safeUrl(f.video_url);
+ $('filmTitle').textContent=f.title||'Film';$('filmMeta').textContent=[f.year,f.genre].filter(Boolean).join(' • ');$('player').innerHTML='';$('direct').hidden=!u;$('direct').href=u||'#';
+ if(!u){$('player').textContent='Tautan video belum tersedia.'}
+ else if(/iframe\.videodelivery\.net|youtube\.com\/embed|player\.vimeo\.com/i.test(u)){let x=document.createElement('iframe');x.src=u;x.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';x.allowFullscreen=true;$('player').appendChild(x)}
+ else if(/\.(mp4|webm|ogg|m3u8)(\?|$)/i.test(u)){let x=document.createElement('video');x.src=u;x.controls=true;x.playsInline=true;$('player').appendChild(x)}
+ else {let x=document.createElement('iframe');x.src=u;x.allowFullscreen=true;$('player').appendChild(x)}
+ $('modal').classList.add('open');document.body.style.overflow='hidden';
+}
+function close(){$('modal').classList.remove('open');$('player').innerHTML='';document.body.style.overflow=''}
+$('close').onclick=close;$('modal').onclick=e=>{if(e.target===$('modal'))close()};document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});$('search').addEventListener('input',render);
+async function init(){
+ const c=window.NONTONKU_CONFIG;
+ if(!window.supabase||!c?.SUPABASE_URL||!c?.SUPABASE_PUBLISHABLE_KEY){$('status').textContent='Konfigurasi Supabase tidak terbaca. Pastikan config.js tetap ada.';return}
+ try{
+  const db=window.supabase.createClient(c.SUPABASE_URL,c.SUPABASE_PUBLISHABLE_KEY);
+  const {data,error}=await db.from('films').select('id,title,year,genre,poster_url,video_url,storage_path,created_at').order('created_at',{ascending:false});
+  if(error)throw error;
+  films=(data||[]).filter(f=>f.title);
+  $('heroText').textContent=films.length?'Pilih poster untuk memutar film.':'Supabase terhubung, tetapi tabel films kosong.';
+  if(films[0])$('heroTitle').textContent=films[0].title;
+  $('status')?.remove();render();
+ }catch(e){console.error('Supabase:',e);$('status').textContent='Gagal memuat film dari Supabase: '+(e.message||'Periksa URL proyek, publishable key, izin SELECT, dan RLS.')}
+}
+init();
+})();
+</script></body></html>
